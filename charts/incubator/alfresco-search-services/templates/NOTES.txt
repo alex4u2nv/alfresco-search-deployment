@@ -1,0 +1,14 @@
+
+{{ if .Values.dnsaddress }}
+
+You can access Alfresco Search Services using:
+
+  Solr: {{ .Values.dnsaddress }}/solr
+
+{{ else }}
+
+If you have a specific DNS address for the cluster please run the following commands to get the application paths:
+
+helm upgrade --reuse-values {{ .Release.Name }} --set dnsaddress="Your DNS address ex: http://myenv.com" alfresco-incubator/alfresco-content-services
+
+{{ end }}

@@ -1,0 +1,36 @@
+# Default values for alfresco-search-services.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# Define the alfresco-search-services properties to use in the k8s cluster
+# This is the search service provider used by alfresco-content-repository
+search:
+  replicaCount: 1
+  image:
+    repository: alfresco/alfresco-search-services
+    tag: "1.1.1"
+    pullPolicy: Always
+    internalPort: 8983
+  service:
+    name: solr
+    type: ClusterIP
+    externalPort: 80
+  ingress:
+    path: /solr
+  environment:
+    SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
+    SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore"
+  resources:
+    requests:
+      memory: "250Mi"
+    limits:
+      memory: "1024Mi"
+
+# Defines the mounting points for the persistence required by the apps in the cluster
+# the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
+persistence:
+  existingClaim: "alfresco-volume-claim"
+  search:
+    data:
+      mountPath: "/opt/alfresco-search-services/data"
+      subPath: "alfresco-content-services/solr-data"

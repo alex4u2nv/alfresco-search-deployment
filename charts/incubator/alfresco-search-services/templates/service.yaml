@@ -1,0 +1,19 @@
+# Defines the service for the alfresco-search-services (solr) app
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "alfresco-search-services.fullname" . }}-solr
+  labels:
+    app: {{ template "alfresco-search-services.fullname" . }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.search.service.type }}
+  ports:
+    - port: {{ .Values.search.service.externalPort }}
+      targetPort: {{ .Values.search.image.internalPort }}
+      name: {{ .Values.search.service.name }}
+  selector:
+    app: {{ template "alfresco-search-services.fullname" . }}-solr
+    release: {{ .Release.Name }}

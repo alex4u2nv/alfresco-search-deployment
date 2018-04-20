@@ -1,0 +1,51 @@
+# Defines the deployment for the alfresco-search-services (solr) app
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: {{ template "alfresco-search-services.fullname" . }}-solr
+  labels:
+    app: {{ template "alfresco-search-services.fullname" . }}-solr
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  replicas: {{ .Values.search.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "alfresco-search-services.fullname" . }}-solr
+        release: {{ .Release.Name }}
+    spec:
+      {{- if .Values.registryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.search.image.repository }}:{{ .Values.search.image.tag }}"
+          imagePullPolicy: {{ .Values.search.image.pullPolicy }}
+          envFrom:
+          - configMapRef:
+              name: {{ template "alfresco-search-services.fullname" . }}-solr-configmap
+          ports:
+            - containerPort: {{ .Values.search.image.internalPort }}
+          resources:
+{{ toYaml .Values.search.resources | indent 12 }}
+          volumeMounts:
+          - name: data
+            mountPath: {{ .Values.persistence.search.data.mountPath }}
+            subPath: {{ .Values.persistence.search.data.subPath }}
+      initContainers:
+        - name: init-db
+          image: busybox
+          # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
+          command: ["sh", "-c", "chown -R 1000:1000 {{ .Values.persistence.search.data.mountPath }}"]
+          volumeMounts:
+          - name: data
+            mountPath: {{ .Values.persistence.search.data.mountPath }}
+            subPath: {{ .Values.persistence.search.data.subPath }}
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Values.persistence.existingClaim }}
