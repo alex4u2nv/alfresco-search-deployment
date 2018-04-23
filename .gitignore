@@ -16,3 +16,6 @@ target
 
 # Helm
 .helmignore
+
+# Project
+charts/incubator/alfresco-search-services*.tgz
