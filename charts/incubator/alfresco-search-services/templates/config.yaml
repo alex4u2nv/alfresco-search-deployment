@@ -8,15 +8,13 @@ metadata:
     release: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
 data:
-  # Alfresco host name is partly hard coded as accessing values of the parent chart is not possible
-  SOLR_ALFRESCO_HOST: {{ .Release.Name }}-alfresco-content-services-repository
-  # Alfresco port number is hard coded as accessing values of the parent chart is not possible
-  SOLR_ALFRESCO_PORT: "80"
+  SOLR_ALFRESCO_HOST: "{{ .Release.Name }}-{{ .Values.repository.host }}-repository"
+  SOLR_ALFRESCO_PORT: "{{ .Values.repository.port }}"
   SOLR_SOLR_HOST: "{{ template "alfresco-search-services.fullname" . }}-solr"
-  SOLR_SOLR_PORT: "{{ .Values.search.service.externalPort }}"
+  SOLR_SOLR_PORT: "{{ .Values.service.externalPort }}"
   # The values for SOLR_CREATE_ALFRESCO_DEFAULTS and SOLR_OPTS, defined in the values.yaml for "search" are set next:
-  {{- if .Values.search.environment }}
-  {{- range $key, $val := .Values.search.environment }}
+  {{- if .Values.environment }}
+  {{- range $key, $val := .Values.environment }}
   {{ $key }}: {{ $val | quote }}
   {{- end }}
   {{- end }}

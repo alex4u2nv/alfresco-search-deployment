@@ -10,7 +10,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: {{ .Values.search.ingress.path }}
+      - path: {{ .Values.ingress.path }}
         backend:
           serviceName: {{ template "alfresco-search-services.fullname" . }}-solr
-          servicePort: {{ .Values.search.service.externalPort }}
+          servicePort: {{ .Values.service.externalPort }}

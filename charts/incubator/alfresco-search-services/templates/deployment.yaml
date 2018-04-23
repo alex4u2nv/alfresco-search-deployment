@@ -9,7 +9,7 @@ metadata:
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
 spec:
-  replicas: {{ .Values.search.replicaCount }}
+  replicas: {{ .Values.replicaCount }}
   template:
     metadata:
       labels:
@@ -23,15 +23,15 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.search.image.repository }}:{{ .Values.search.image.tag }}"
-          imagePullPolicy: {{ .Values.search.image.pullPolicy }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
           envFrom:
           - configMapRef:
               name: {{ template "alfresco-search-services.fullname" . }}-solr-configmap
           ports:
-            - containerPort: {{ .Values.search.image.internalPort }}
+            - containerPort: {{ .Values.image.internalPort }}
           resources:
-{{ toYaml .Values.search.resources | indent 12 }}
+{{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
           - name: data
             mountPath: {{ .Values.persistence.search.data.mountPath }}
