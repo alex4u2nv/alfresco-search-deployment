@@ -16,9 +16,8 @@ service:
   externalPort: 80
 ingress:
   path: /solr
-repository:
-  host: alfresco-content-services
-  port: 80
+# The parent chart will set the values for "repository.host" and "repository.port"
+repository: {}
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
   SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore"
