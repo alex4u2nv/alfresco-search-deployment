@@ -18,4 +18,4 @@ target
 .helmignore
 
 # Project
-charts/incubator/alfresco-search-services*.tgz
+helm/alfresco-search-services*.tgz
