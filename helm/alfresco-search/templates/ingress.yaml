@@ -1,8 +1,8 @@
-# Defines the ingress for the alfresco search services (solr) app
+# Defines the ingress for the Alfresco Search (Solr) App
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: {{ template "alfresco-search-services.fullName" . }}-solr
+  name: {{ template "alfresco-search.fullName" . }}-solr
   annotations:
     kubernetes.io/ingress.class: "nginx"
     ingress.kubernetes.io/ssl-redirect: "false"
@@ -12,5 +12,5 @@ spec:
       paths:
       - path: {{ .Values.ingress.path }}
         backend:
-          serviceName: {{ template "alfresco-search-services.fullName" . }}-solr
+          serviceName: {{ template "alfresco-search.fullName" . }}-solr
           servicePort: {{ .Values.service.externalPort }}

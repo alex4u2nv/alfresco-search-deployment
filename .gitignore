@@ -18,4 +18,4 @@ target
 .helmignore
 
 # Project
-helm/alfresco-search-services*.tgz
+helm/alfresco-search*.tgz
