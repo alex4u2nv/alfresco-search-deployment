@@ -1,1 +1,1 @@
-# Alfresco Search Services Deployment
+# Alfresco Search Deployment
