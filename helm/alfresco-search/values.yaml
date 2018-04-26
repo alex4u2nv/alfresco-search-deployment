@@ -37,10 +37,10 @@ resources:
   limits:
     memory: "1024Mi"
 # Defines the mounting points for the persistence required by the apps in the cluster
-# the solr data folder containing the indexes for the alfresco-search is mapped to alfresco-content/solr-data
+# the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
 persistence:
   existingClaim: "alfresco-volume-claim"
   search:
     data:
-      mountPath: "/opt/alfresco-search/data"
+      mountPath: "/opt/alfresco-search-services/data"
       subPath: "alfresco-content-services/solr-data"
