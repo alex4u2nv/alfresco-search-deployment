@@ -2,9 +2,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ template "alfresco-search-services.fullname" . }}-solr
+  name: {{ template "alfresco-search-services.fullName" . }}-solr
   labels:
-    app: {{ template "alfresco-search-services.fullname" . }}
+    app: {{ template "alfresco-search-services.fullName" . }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -12,8 +12,8 @@ spec:
   type: {{ .Values.service.type }}
   ports:
     - port: {{ .Values.service.externalPort }}
-      targetPort: {{ .Values.image.internalPort }}
+      targetPort: {{ template "alfresco-search-services.internalPort" . }}
       name: {{ .Values.service.name }}
   selector:
-    app: {{ template "alfresco-search-services.fullname" . }}-solr
+    app: {{ template "alfresco-search-services.fullName" . }}-solr
     release: {{ .Release.Name }}

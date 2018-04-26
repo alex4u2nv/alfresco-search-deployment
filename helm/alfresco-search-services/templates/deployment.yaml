@@ -2,9 +2,9 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: {{ template "alfresco-search-services.fullname" . }}-solr
+  name: {{ template "alfresco-search-services.fullName" . }}-solr
   labels:
-    app: {{ template "alfresco-search-services.fullname" . }}-solr
+    app: {{ template "alfresco-search-services.fullName" . }}-solr
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
     release: {{ .Release.Name }}
     heritage: {{ .Release.Service }}
@@ -13,7 +13,7 @@ spec:
   template:
     metadata:
       labels:
-        app: {{ template "alfresco-search-services.fullname" . }}-solr
+        app: {{ template "alfresco-search-services.fullName" . }}-solr
         release: {{ .Release.Name }}
     spec:
       {{- if .Values.registryPullSecrets }}
@@ -23,13 +23,13 @@ spec:
       {{- end }}
       containers:
         - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
-          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          image: {{ template "alfresco-search-services.dockerImage" . }}
+          imagePullPolicy: {{ template "alfresco-search-services.pullPolicy" . }}
           envFrom:
           - configMapRef:
-              name: {{ template "alfresco-search-services.fullname" . }}-solr-configmap
+              name: {{ template "alfresco-search-services.fullName" . }}-solr-configmap
           ports:
-            - containerPort: {{ .Values.image.internalPort }}
+            - containerPort: {{ template "alfresco-search-services.internalPort" . }}
           resources:
 {{ toYaml .Values.resources | indent 12 }}
           volumeMounts:
