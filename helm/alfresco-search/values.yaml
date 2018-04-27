@@ -30,7 +30,7 @@ ingress:
 repository: {}
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
-  SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search/data/contentstore"
+  SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore"
 resources:
   requests:
     memory: "250Mi"
