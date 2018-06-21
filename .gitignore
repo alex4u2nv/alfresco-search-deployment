@@ -19,3 +19,5 @@ target
 
 # Project
 helm/alfresco-search*.tgz
+helm/alfresco-search/charts/
+helm/alfresco-search/requirements.lock
