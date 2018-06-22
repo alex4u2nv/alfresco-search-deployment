@@ -5,6 +5,13 @@ THE TEMPLATES DEFINED BELOW WILL BE USED BY OTHER CHARTS.
 */}}
 
 {{/*
+Get Alfresco Search name
+*/}}
+{{- define "alfresco-search" -}}
+{{- printf "%s-%s-%s" .Release.Name "alfresco-search" "solr" -}}
+{{- end -}}
+
+{{/*
 Get Alfresco Search Host
 */}}
 {{- define "alfresco-search.host" -}}

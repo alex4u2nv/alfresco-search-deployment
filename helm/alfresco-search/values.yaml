@@ -27,6 +27,10 @@ service:
 ingress:
   enabled: true
   path: /solr
+  # Solr 'admin' user password
+  authPass: admin
+  # Comma separated list of IP CIDR to limit search endpoint over the internet
+  whitelist_ips: "0.0.0.0/0"
 # The parent chart will set the values for "repository.host" and "repository.port"
 repository: {}
 environment:
