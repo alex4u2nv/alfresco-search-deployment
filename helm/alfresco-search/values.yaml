@@ -16,8 +16,9 @@ searchServicesImage:
   pullPolicy: &searchDockerImagePullPolicy Always
   internalPort: &searchDockerImageInternalPort 8983
 insightEngineImage:
-  repository: alfresco/alfresco-insight-engine
-  tag: "1.0.0-EA"
+  repository: quay.io/alfresco/insight-engine
+  # TODO: Change the value of the tag after the release
+  tag: "1.0.0-SNAPSHOT"
   pullPolicy: *searchDockerImagePullPolicy
   internalPort: *searchDockerImageInternalPort
 service:
