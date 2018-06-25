@@ -5,6 +5,14 @@ THE TEMPLATES DEFINED BELOW WILL BE USED BY OTHER CHARTS.
 */}}
 
 {{/*
+Get Alfresco Search Full Name
+*/}}
+{{- define "alfresco-search.fullName" -}}
+{{- $name := default .Chart.Name .Values.nameOverride -}}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+{{/*
 Get Alfresco Search Host
 */}}
 {{- define "alfresco-search.host" -}}
@@ -21,14 +29,6 @@ Get Alfresco Search Port
 {{/* ======================================================================== */}}
 
 {{/* THE TEMPLATES DEFINED BELOW ARE SUPPOSSED TO BE USED FOR THIS CHART ONLY */}}
-
-{{/*
-Get Alfresco Search Full Name
-*/}}
-{{- define "alfresco-search.fullName" -}}
-{{- $name := default .Chart.Name .Values.nameOverride -}}
-{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
 
 {{/*
 Get Alfresco Search Internal Port
