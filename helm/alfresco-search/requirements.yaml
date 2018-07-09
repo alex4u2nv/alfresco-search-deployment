@@ -2,5 +2,5 @@
 dependencies:
 - name: alfresco-insight-zeppelin
   version: 0.0.1
-  repository: http://kubernetes-charts.alfresco.com/incubator
+  repository: http://kubernetes-charts.alfresco.com/stable
   condition: alfresco-insight-zeppelin.enabled
