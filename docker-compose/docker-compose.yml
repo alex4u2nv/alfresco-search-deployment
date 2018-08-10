@@ -107,9 +107,8 @@ services:
     zeppelin:
         image: quay.io/alfresco/insight-zeppelin:1.0.0-RC1
         environment:
+            - REPO_PROTOCOL=http
             - REPO_HOST=alfresco
             - REPO_PORT=8080
         ports:
             - "9090:9090"
-            - "5005:5005"
-            - "6006:6006"
