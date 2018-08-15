@@ -36,7 +36,7 @@ services:
             - 8082:8080 #Browser port
 
     alfresco-pdf-renderer:
-        image: alfresco/alfresco-pdf-renderer:1.2
+        image: alfresco/alfresco-pdf-renderer:1.3
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -44,7 +44,7 @@ services:
             - 8090:8090
 
     imagemagick:
-        image: alfresco/alfresco-imagemagick:1.2
+        image: alfresco/alfresco-imagemagick:1.3
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -52,7 +52,7 @@ services:
             - 8091:8090
 
     libreoffice:
-        image: alfresco/alfresco-libreoffice:1.2
+        image: alfresco/alfresco-libreoffice:1.3
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -60,7 +60,7 @@ services:
             - 8092:8090
 
     tika:
-        image: alfresco/alfresco-tika:1.2
+        image: alfresco/alfresco-tika:1.3
         mem_limit: 1g
         environment:
             JAVA_OPTS: " -Xms256m -Xmx256m"
@@ -89,7 +89,7 @@ services:
             - 5432:5432
 
     search:
-        image: quay.io/alfresco/insight-engine:1.0.0-RC1
+        image: quay.io/alfresco/insight-engine:1.0.0
         mem_limit: 2500m
         environment:
             #Solr needs to know how to register itself with Alfresco
@@ -105,7 +105,7 @@ services:
             - 8083:8983 #Browser port
 
     zeppelin:
-        image: quay.io/alfresco/insight-zeppelin:1.0.0-RC1
+        image: quay.io/alfresco/insight-zeppelin:1.0.0
         environment:
             - REPO_PROTOCOL=http
             - REPO_HOST=alfresco
