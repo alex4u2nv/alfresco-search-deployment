@@ -4,7 +4,9 @@
 
 # Define the alfresco-search properties to use in the k8s cluster
 # This is the search provider used by alfresco-content-repository
-replicaCount: 1
+replicaCount: 2
+search:
+  name: alfresco-search
 # Define the type of Alfresco Search to use. The default is Alfresco Search Services.
 # The type can be set to use Insight Engine with --set alfresco-search.type="insight-engine",alfresco-search.registryPullSecrets="quay-registry-secret",alfresco-insight-zeppelin.enabled="true"
 # As the Docker Image for Insight Engine is not publicly available the registryPullSecrets has to be set
@@ -47,7 +49,10 @@ resources:
 # Defines the mounting points for the persistence required by the apps in the cluster
 # the solr data folder containing the indexes for the alfresco-search-services is mapped to alfresco-content-services/solr-data
 persistence:
-  existingClaim: "alfresco-volume-claim"
+  enabled: true
+  accessModes: [ "ReadWriteOnce" ]
+  storageClassName: gp2
+  size: 20Gi
   search:
     data:
       mountPath: "/opt/alfresco-search-services/data"

@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Values.search.name }}
+  labels:
+    app: {{ template "alfresco-search.fullName" . }}-solr
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+    component: search
+spec:
+  serviceName: "{{ template "alfresco-search.fullName" . }}-solr"
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ template "alfresco-search.fullName" . }}-solr
+  template:
+    metadata:
+      labels:
+        app: {{ template "alfresco-search.fullName" . }}-solr
+    spec:
+      {{- if .Values.registryPullSecrets }}
+      # only set this secret if a private docker registry variable is defined
+      imagePullSecrets:
+        - name: {{ .Values.registryPullSecrets }}
+      {{- end }}
+      containers:
+      - name: {{ .Values.service.name }}
+        image: {{ template "alfresco-search.dockerImage" . }}
+        imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
+        ports:
+        - containerPort:  {{ template "alfresco-search.internalPort" . }}
+          name: {{ .Values.service.name }}
+        resources:
+{{ toYaml .Values.resources | indent 12 }}
+        volumeMounts:
+        - name: data
+          mountPath:  {{ .Values.persistence.search.data.mountPath }}
+          subPath: {{ .Values.persistence.search.data.subPath }}
+      initContainers:
+        - name: init-db
+          image: busybox
+          # command to allow solr to write to EFS volume. Details: https://issues.alfresco.com/jira/browse/DEPLOY-419
+          # Still allowing chmod to execute as this makes sense. however, this statefulset is meant to be used with ebs volumes.
+          # So that Solr can be provisioned with high IOPS SSDs
+          command: ["sh", "-c", "chown -R 1000:1000 {{ .Values.persistence.search.data.mountPath }}"]
+          volumeMounts:
+          - name: data
+            mountPath: {{ .Values.persistence.search.data.mountPath }}
+            subPath: {{ .Values.persistence.search.data.subPath }}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: {{ .Values.persistence.accessModes }}
+      storageClassName: {{ .Values.persistence.storageClassName }}
+      resources:
+        requests:
+          storage: {{ .Values.persistence.size }}
