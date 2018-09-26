@@ -37,10 +37,12 @@ ingress:
   # Comma separated list of IP CIDR to limit search endpoint over the internet
   whitelist_ips: "0.0.0.0/0"
 # The parent chart will set the values for "repository.host" and "repository.port"
-repository: {}
+repository: 
+  host: alfresco-cs
+  port: 8080
 environment:
   SOLR_CREATE_ALFRESCO_DEFAULTS: alfresco,archive
-  SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore"
+  SOLR_OPTS: "-Dsolr.content.dir=/opt/alfresco-search-services/data/contentstore -Dalfresco.host=wizened-scorpion-alfresco-cs-repository -Dalfresco.port=80 "
 resources:
   requests:
     memory: "250Mi"

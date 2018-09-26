@@ -28,6 +28,9 @@ spec:
       - name: {{ .Values.service.name }}
         image: {{ template "alfresco-search.dockerImage" . }}
         imagePullPolicy: {{ template "alfresco-search.pullPolicy" . }}
+        env:
+        - name: SOLR_OPTS
+          value: {{ .Values.environment.SOLR_OPTS }}
         ports:
         - containerPort:  {{ template "alfresco-search.internalPort" . }}
           name: {{ .Values.service.name }}

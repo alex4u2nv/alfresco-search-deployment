@@ -8,6 +8,5 @@ spec:
   ports:
     - port: {{ .Values.service.externalPort }}
       name: {{ .Values.service.name }}
-  clusterIP: None
   selector:
     app: {{ template "alfresco-search.fullName" . }}-solr

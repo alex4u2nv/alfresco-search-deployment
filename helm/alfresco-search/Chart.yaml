@@ -1,6 +1,6 @@
-name: alfresco-search
-version: 0.0.5
-description: A Helm chart for deploying Alfresco Search
+name: alfresco-search-statefulset
+version: 0.0.1
+description: A Helm chart for deploying Alfresco Search Using Statefulsets
 keywords:
 - search
 - search services
@@ -10,5 +10,5 @@ keywords:
 - alfresco insight engine
 home: https://www.alfresco.com
 sources:
-- https://github.com/alfresco/alfresco-search-deployment
+- https://github.com/alex4u2nv/alfresco-search-deployment
 icon: https://avatars0.githubusercontent.com/u/391127?s=200&v=4
